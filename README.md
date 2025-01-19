@@ -45,7 +45,7 @@ Run locally or with Docker.
    
     ```bash
     cd tcs-backend
-    docker compose up
+    docker compose up -d
    ```
    
    The app should now be running on localhost:8080.
