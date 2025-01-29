@@ -19,9 +19,6 @@
 <!--- Short description --->
 The Clothing Store is an online clothing store created as a part of a school project. It is scheduled to be completed by Spring 2025. This is the backend component.
 
-## Features
-- 
-
 ## Technologies
 
 - **Backend**: Spring Boot(Maven, Java)
