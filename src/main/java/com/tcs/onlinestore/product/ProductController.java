@@ -36,10 +36,19 @@ public class ProductController {
 
     @Operation(summary = "Get a single product", description = "Retrieves one product.", tags = {"products"})
     @ApiResponses(value = {@ApiResponse(
-            description = "successfully created",
+            description = "successful operation",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
     @GetMapping(path = "{product}")
     public ResponseEntity<Product> getProduct(@PathVariable("product") String id) {
         return productService.getProduct(id);
+    }
+
+    @Operation(summary = "Search for one or more products", description = "Retrieves one or more products based on search word.", tags = {"products"})
+    @ApiResponses(value = {@ApiResponse(
+            description = "successful operation",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
+    @GetMapping(path = "search/{searchWord}")
+    public ResponseEntity<List<ProductResponseDTO>> getAutocomplete(@PathVariable("searchWord") String searchWord) {
+        return productService.getAutocomplete(searchWord);
     }
 }

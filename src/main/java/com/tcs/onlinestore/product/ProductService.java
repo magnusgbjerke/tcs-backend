@@ -65,4 +65,23 @@ public class ProductService {
         );
         return stockResponse;
     }
+
+    public ResponseEntity<List<ProductResponseDTO>> getAutocomplete(String searchWord) {
+        List<Product> products = productRepository.search(searchWord);
+        List<ProductResponseDTO> productResponse = new ArrayList<>();
+        for (int i = 0; i < products.size(); i++) {
+            productResponse.add(
+                    new ProductResponseDTO(
+                            products.get(i).getId(),
+                            products.get(i).getBrand().getName(),
+                            products.get(i).getName(),
+                            stockForProduct(products.get(i)),
+                            products.get(i).getType().getName(),
+                            products.get(i).getCustomerCategory().getName(),
+                            products.get(i).getType().getProductCategory().getName()
+                    )
+            );
+        }
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+    }
 }
