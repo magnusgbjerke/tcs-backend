@@ -39,7 +39,7 @@ public class ProductController {
             description = "successfully created",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
     @GetMapping(path = "{product}")
-    public ResponseEntity<Product> getProduct(@PathVariable("product") Integer id) {
+    public ResponseEntity<Product> getProduct(@PathVariable("product") String id) {
         return productService.getProduct(id);
     }
 }

@@ -34,6 +34,7 @@ public class ProductService {
             productResponse.add(
                     new ProductResponseDTO(
                             products.get(i).getId(),
+                            products.get(i).getBrand().getName(),
                             products.get(i).getName(),
                             stockForProduct(products.get(i)),
                             products.get(i).getType().getName(),
@@ -45,7 +46,7 @@ public class ProductService {
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<Product> getProduct(Integer id) {
+    public ResponseEntity<Product> getProduct(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product with ID " + id + " was not found"));
         return new ResponseEntity<>(product, HttpStatus.OK);
     }

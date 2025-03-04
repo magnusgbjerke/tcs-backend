@@ -17,8 +17,11 @@ import java.util.List;
 @Schema(name = "Product")
 public class ProductResponseDTO {
 
-    @Schema(example = "1")
-    private Integer id;
+    @Schema(example = "velora-houndstooth-blazer-i-regular-fit") // combination of brand and name of product
+    private String id;
+
+    @Schema(example = "Velora") // Velora, Drift & Dune, Noxen, Urban Loom, LuxeRoots
+    private String brand;
 
     @Schema(example = "Houndstooth blazer i regular fit")
     private String name;

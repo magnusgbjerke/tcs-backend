@@ -10,6 +10,6 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock, Stock.StockPK> {
 
     @Query(value = "SELECT * FROM stock where id_id=:id", nativeQuery = true)
-    List<Stock> findTypeById(Integer id);
+    List<Stock> findTypeById(String id);
 
 }

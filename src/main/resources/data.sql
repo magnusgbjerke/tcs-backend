@@ -25,25 +25,33 @@ values
 ('women'),
 ('kids');
 
-insert into product (name, type, customer_category)
+insert into brand (name)
 values
-('Houndstooth blazer i regular fit', 'hoodies', 'men'),
-('AIR FORCE 1 07', 'shoes', 'women'),
-('Slim fit corduroy chinos', 'pants', 'men');
+('Velora'),
+('Drift & Dune'),
+('Noxen'),
+('Urban Loom'),
+('LuxeRoots');
+
+insert into product (id, brand_name, name, type, customer_category)
+values
+('velora-houndstooth-blazer-i-regular-fit', 'Velora', 'Houndstooth blazer i regular fit', 'hoodies', 'men'),
+('velora-air-force-1-07','Velora', 'AIR FORCE 1 07', 'shoes', 'women'),
+('noxen-slim-fit-corduroy-chinos','Noxen', 'Slim fit corduroy chinos', 'pants', 'men');
 
 insert into stock (id_id, quantity, size_name)
 values
-(1, 5, 'medium'),
-(1, 10, 'small'),
-(2, 2, '36'),
-(2, 9, '40'),
-(2, 33, '42'),
-(3, 13, 'small');
+('velora-houndstooth-blazer-i-regular-fit', 5, 'medium'),
+('velora-houndstooth-blazer-i-regular-fit', 10, 'small'),
+('velora-air-force-1-07', 2, '36'),
+('velora-air-force-1-07', 9, '40'),
+('velora-air-force-1-07', 33, '42'),
+('noxen-slim-fit-corduroy-chinos', 13, 'small');
 
 -- Views
 
 CREATE VIEW Products AS
-SELECT product.id, product.name, stock.quantity, stock.size_name as "size",
+SELECT product.id, product.brand_name as "brand", product.name, stock.quantity, stock.size_name as "size",
 product.customer_category as "customer category", product.type,
 type.product_category as "product category"
 FROM product
