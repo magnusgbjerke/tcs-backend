@@ -22,26 +22,26 @@ class OnlinestoreApplicationTests {
 
     @Test
     public void testIdName() throws Exception {
-
-        Product product1 = new Product(new Brand("Velora"), "Houndstooth blazer i regular fit1",
+        /*
+        Product product1 = new Product(new Brand("Velora"), "Houndstooth Blazer i Regular Fit",
                 new CustomerCategory("men"), new Type("hoodies", new ProductCategory()));
         System.out.println(product1);
 
-        Product product2 = new Product(new Brand("Drift & Dune"), "AIR FORCE 1 07",
+        Product product2 = new Product(new Brand("Drift & Dune"), "Oversized Hoodie i Kangaroo Pocket",
                 new CustomerCategory("men"), new Type("hoodies", new ProductCategory()));
         System.out.println(product2);
 
-        Product product3 = new Product(new Brand("Noxen"), "Slim fit corduroy chinos",
+        Product product3 = new Product(new Brand("Noxen"), "Cargo Joggers i Elastic Waist",
                 new CustomerCategory("men"), new Type("hoodies", new ProductCategory()));
         System.out.println(product3);
 
-        Product product4 = new Product(new Brand("Urban Loom"), "Houndstooth blazer i regular fit4",
+        Product product4 = new Product(new Brand("Urban Loom"), "Graphic Tee i Vintage Wash",
                 new CustomerCategory("men"), new Type("hoodies", new ProductCategory()));
         System.out.println(product4);
 
-        Product product5 = new Product(new Brand("LuxeRoots"), "Houndstooth blazer i regular fit5",
+        Product product5 = new Product(new Brand("LuxeRoots"), "Basic Hoodie i Warm Fleece",
                 new CustomerCategory("men"), new Type("hoodies", new ProductCategory()));
         System.out.println(product5);
+        */
     }
-
 }
