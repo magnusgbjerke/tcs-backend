@@ -21,17 +21,20 @@ The Clothing Store is an online clothing store created as a part of a school pro
 
 ## Technologies
 
-- **Backend**: Spring Boot(Maven, Java)
+- **Backend**: Spring Boot with Maven and Java
 - **API Docs**: Swagger UI and OpenAPI v3
 - **DB**: PostgreSQL
 
 ## Getting Started
 Run locally or with Docker.
 
-### Prerequisites
-- Docker Desktop installed.
+### Run locally
+- You need JDK 21.
+- You need a PostgreSQL server running on port 5432 with username: postgres and password: postgrespassword.
+- Create database "tcs" and "keycloak" on the PostgreSQL server.
 
 ### Run with Docker
+- You need Docker Desktop.
 1. Clone the repository:
    
    ```bash
@@ -45,10 +48,10 @@ Run locally or with Docker.
     docker compose up -d
    ```
    
-   The app should now be running on localhost:8080.
+The app should now be running on localhost:8080.
 
-   Swagger UI --> [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
+Swagger UI --> [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
 
-   OpenAPI v3 --> [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs).
+OpenAPI v3 --> [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs).
 
-   PgAdmin(Web-version) --> [localhost:80](http://localhost:80).
+PgAdmin(Web-version, Only available when run with Docker) --> [localhost:80](http://localhost:80).
