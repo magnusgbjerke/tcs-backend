@@ -32,6 +32,14 @@ Run locally or with Docker.
 - You need JDK 21.
 - You need a PostgreSQL server running on port 5432 with username: postgres and password: postgrespassword.
 - Create database "tcs" and "keycloak" on the PostgreSQL server.
+- You need a keycloak server running on port 8081 and import the realm-export.json. The server can be built with Docker:
+
+  ```bash
+  docker build -t keycloak .
+  
+  docker run --name keycloak -d -p 8081:8081 keycloak
+  
+  ```
 
 ### Run with Docker
 - You need Docker Desktop.
