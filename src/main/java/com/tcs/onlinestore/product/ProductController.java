@@ -63,7 +63,6 @@ public class ProductController {
         return productService.getValidTypes();
     }
 
-    // 🔍 Nytt endepunkt for avansert søk
     @Operation(summary = "Advanced product search with optional filters: name, customerCategory, productCategory, type, minPrice, maxPrice", tags = {"products"})
     @ApiResponses(value = {@ApiResponse(
             description = "successful operation",

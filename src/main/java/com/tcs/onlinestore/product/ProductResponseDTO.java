@@ -18,13 +18,13 @@ import java.util.List;
 @Schema(name = "Product")
 public class ProductResponseDTO {
 
-    @Schema(example = "velora-houndstooth-blazer-i-regular-fit") // combination of brand and name of product
+    @Schema(example = "velora-houndstooth-blazer-i-regular-fit")
     private String id;
 
     @Schema(example = "Houndstooth Blazer i Regular Fit")
     private String name;
 
-    @Schema(example = "Velora") // Velora, Drift & Dune, Noxen, Urban Loom, LuxeRoots
+    @Schema(example = "Velora")
     private String brand;
 
     @Schema(example = "A stylish and sophisticated houndstooth-patterned blazer with a regular fit, perfect for both casual and formal occasions.")
@@ -50,4 +50,7 @@ public class ProductResponseDTO {
 
     @Schema(example = "799")
     private BigDecimal price;
+
+    @Schema(example = "699")
+    private BigDecimal priceAfterDiscount;
 }

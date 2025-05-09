@@ -44,6 +44,9 @@ public class Product {
     @Column(nullable = false, scale = 2)
     private BigDecimal price;
 
+    @Column(name = "discount_percentage")
+    private Double discountPercentage;
+
     public Product(String name, Brand brand, String description, BigDecimal rating, String image,
                    CustomerCategory customerCategory, Type type, BigDecimal price) {
         String formattedStringBrand = brand.getName().toLowerCase().replaceAll("[,\\s]+", "-");
@@ -59,5 +62,12 @@ public class Product {
         this.type = type;
         this.price = price;
     }
-}
 
+    public BigDecimal getPriceAfterDiscount() {
+        if (discountPercentage == null || discountPercentage == 0) {
+            return price;
+        }
+        BigDecimal discount = price.multiply(BigDecimal.valueOf(discountPercentage / 100.0));
+        return price.subtract(discount);
+    }
+}
