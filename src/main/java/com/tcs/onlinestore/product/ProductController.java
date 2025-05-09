@@ -62,4 +62,22 @@ public class ProductController {
     public ResponseEntity<ValidTypesDTO> getValidTypes() {
         return productService.getValidTypes();
     }
+
+    // 🔍 Nytt endepunkt for avansert søk
+    @Operation(summary = "Advanced product search with optional filters: name, customerCategory, productCategory, type, minPrice, maxPrice", tags = {"products"})
+    @ApiResponses(value = {@ApiResponse(
+            description = "successful operation",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))})})
+    @GetMapping("/search/advanced")
+    public ResponseEntity<List<Product>> searchProducts(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String customerCategory,
+            @RequestParam(required = false) String productCategory,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice) {
+
+        List<Product> products = productService.searchProducts(search, customerCategory, productCategory, type, minPrice, maxPrice);
+        return ResponseEntity.ok(products);
+    }
 }
