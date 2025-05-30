@@ -1,4 +1,4 @@
-package com.tcs.onlinestore.globalExceptionHandler;
+package com.tcs.onlinestore.exception;
 
 // Used when authentication is required, but the user has not provided valid credentials.
 public class UnauthorizedException extends RuntimeException {

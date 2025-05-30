@@ -1,4 +1,4 @@
-package com.tcs.onlinestore.globalExceptionHandler;
+package com.tcs.onlinestore.exception;
 
 // This exception is thrown when the client sends a request that is syntactically invalid or cannot be processed due to some client-side error.
 public class BadRequestException extends RuntimeException {
