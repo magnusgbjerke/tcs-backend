@@ -1,4 +1,4 @@
-package com.tcs.onlinestore.product.productCategory;
+package com.tcs.onlinestore.category.productCategory;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
