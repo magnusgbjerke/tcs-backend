@@ -1,0 +1,7 @@
+CREATE VIEW Products AS
+SELECT product.id, product.brand_name as "brand", product.name, stock.quantity, stock.size_name as "size",
+product.customer_category as "customer category", product.type,
+type.product_category as "product category"
+FROM product
+INNER JOIN stock on product.id=stock.id_id
+INNER JOIN type on type.name=product.type
