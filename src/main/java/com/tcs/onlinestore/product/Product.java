@@ -1,7 +1,7 @@
 package com.tcs.onlinestore.product;
 
 import com.tcs.onlinestore.brand.Brand;
-import com.tcs.onlinestore.product.customerCategory.CustomerCategory;
+import com.tcs.onlinestore.category.customerCategory.CustomerCategory;
 import com.tcs.onlinestore.product.type.Type;
 import jakarta.persistence.*;
 import lombok.*;

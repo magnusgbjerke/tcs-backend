@@ -14,8 +14,8 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "api/products")
-@Tag(name = "products", description = "the product API")
+@RequestMapping(path = "api/product")
+@Tag(name = "product", description = "the product API")
 public class ProductController {
 
     private final ProductService productService;
@@ -25,7 +25,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @Operation(summary = "Get all products or search based on name, customerCategory, productCategory and/or type", description = "Retrieves a list of all products or products searched based on name, customerCategory, productCategory and/or type", tags = {"products"})
+    @Operation(summary = "Get products", description = "Retrieves a list of all products. It is possible to search based on name, customerCategory, productCategory and/or type", tags = {"product"})
     @ApiResponses(value = {@ApiResponse(
             description = "successful operation",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
@@ -45,19 +45,19 @@ public class ProductController {
         return productService.getFilteredProducts(search, customerCategory, productCategory, type);
     }
 
-    @Operation(summary = "Get a single product", description = "Retrieves one product.", tags = {"products"})
+    @Operation(summary = "Get product", description = "Retrieves a product.", tags = {"product"})
     @ApiResponses(value = {@ApiResponse(
             description = "successful operation",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
-    @GetMapping(path = "{product}")
-    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable("product") String id) {
+    @GetMapping(path = "{productId}")
+    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable("productId") String id) {
         return productService.getProduct(id);
     }
 
-    @Operation(summary = "Get all valid types", description = "Retrieves all valid types.", tags = {"products"})
+    @Operation(summary = "Get valid types", description = "Retrieves all valid types.", tags = {"product"})
     @ApiResponses(value = {@ApiResponse(
             description = "successful operation",
-            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))})})
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ValidTypesDTO.class))})})
     @GetMapping(path = "/valid-types")
     public ResponseEntity<ValidTypesDTO> getValidTypes() {
         return productService.getValidTypes();

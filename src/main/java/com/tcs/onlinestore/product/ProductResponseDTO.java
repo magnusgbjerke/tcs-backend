@@ -3,18 +3,14 @@ package com.tcs.onlinestore.product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tcs.onlinestore.product.stock.StockResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@ToString
-@Getter
-@Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Schema(name = "Product")
 public class ProductResponseDTO {
 

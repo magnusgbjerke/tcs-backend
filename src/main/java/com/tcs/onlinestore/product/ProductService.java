@@ -1,10 +1,10 @@
 package com.tcs.onlinestore.product;
 
-import com.tcs.onlinestore.globalExceptionHandler.EntityNotFoundException;
-import com.tcs.onlinestore.product.customerCategory.CustomerCategory;
-import com.tcs.onlinestore.product.customerCategory.CustomerCategoryRepository;
-import com.tcs.onlinestore.product.productCategory.ProductCategory;
-import com.tcs.onlinestore.product.productCategory.ProductCategoryRepository;
+import com.tcs.onlinestore.exception.EntityNotFoundException;
+import com.tcs.onlinestore.category.customerCategory.CustomerCategory;
+import com.tcs.onlinestore.category.customerCategory.CustomerCategoryRepository;
+import com.tcs.onlinestore.category.productCategory.ProductCategory;
+import com.tcs.onlinestore.category.productCategory.ProductCategoryRepository;
 import com.tcs.onlinestore.product.stock.Stock;
 import com.tcs.onlinestore.product.stock.StockRepository;
 import com.tcs.onlinestore.product.stock.StockResponseDTO;
