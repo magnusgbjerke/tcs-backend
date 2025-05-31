@@ -20,10 +20,12 @@ import com.tcs.onlinestore.product.stock.StockRepository;
 import com.tcs.onlinestore.product.stock.StockResponseDTO;
 import com.tcs.onlinestore.product.type.Type;
 import com.tcs.onlinestore.product.type.TypeRepository;
+import com.tcs.onlinestore.util.HelperService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -41,28 +43,39 @@ public class OrderService {
     private final SizeRepository sizeRepository;
     private final OrderRepository orderRepository;
     private final OrderLineRepository orderLineRepository;
+    private final HelperService helperService;
 
     @Autowired
     public OrderService(ProductRepository productRepository, StockRepository stockRepository,
                         CustomerCategoryRepository customerCategoryRepository,
                         SizeRepository sizeRepository, OrderRepository orderRepository,
-                        OrderLineRepository orderLineRepository) {
+                        OrderLineRepository orderLineRepository,
+                        HelperService helperService) {
         this.productRepository = productRepository;
         this.stockRepository = stockRepository;
         this.customerCategoryRepository = customerCategoryRepository;
         this.sizeRepository = sizeRepository;
         this.orderRepository = orderRepository;
         this.orderLineRepository = orderLineRepository;
+        this.helperService = helperService;
     }
 
-    public OrderDTO getOrder(UUID userId) {
+    public OrderDTO getActiveOrder(Jwt jwt) {
         // Find order by userId
-        Order order = orderRepository.findByUserId(userId).orElseThrow(
+        Order order = orderRepository.findActiveOrderByUserId(UUID.fromString(jwt.getSubject())).orElseThrow(
                 () -> new EntityNotFoundException("User have not created an order"));
         List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.getId());
         List<OrderLineDTO> orderLinesDTO = new ArrayList<>();
         for (int i = 0; i < orderLines.size(); i++) {
-            orderLinesDTO.add(new OrderLineDTO(convertToDTO(orderLines.get(i).getProduct()), orderLines.get(i).getQuantity()));
+            orderLinesDTO.add(
+                    new OrderLineDTO(
+                            helperService.convertToDTO(
+                                    orderLines.get(i).getProduct()
+                            ),
+                            orderLines.get(i).getSize().getName(),
+                            orderLines.get(i).getQuantity()
+                    )
+            );
         }
         return new OrderDTO(
                 order.getOrderCreated(),
@@ -72,56 +85,63 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(List<CreateOrderDTO> order) {
-        // Check if user already has an order
-        //orderRepository.findByUserId().ifPresent(x -> {
-        //    throw new ConflictException("User already has an order");
+    public void createOrder(Jwt jwt, List<CreateOrderDTO> order) {
+        // Check if user already has an active order
+        helperService.checkActiveOrder(UUID.fromString(jwt.getSubject()));
         // Save order
-        Order savedOrder = orderRepository.save(new Order(UUID.fromString("6630d115-3a33-494f-9747-a4604dced5b3"), LocalDateTime.now(), false));
-        List<OrderLineDTO> orderlineslist = new ArrayList<>();
+        Order savedOrder = orderRepository.save(new Order(UUID.fromString(jwt.getSubject()), LocalDateTime.now(), false));
         for (int i = 0; i < order.size(); i++) {
             // Get product
-            Product product = productRepository.findById(order.get(i).getProductId()).orElseThrow(
-                    () -> new EntityNotFoundException("Product not found"));
+            Product product = helperService.getProduct(order.get(i).getProductId());
+            // Get size
+            Size size = helperService.getSize(order.get(i).getSizeName());
             // Save orderlines
             orderLineRepository.save(
                     new OrderLine(
                             savedOrder,
                             product,
+                            size,
                             order.get(i).getQuantity()
                     )
             );
         }
     }
 
-
-    private ProductResponseDTO convertToDTO(Product products) {
-        return new ProductResponseDTO(
-                products.getId(),
-                products.getName(),
-                products.getBrand().getName(),
-                products.getDescription(),
-                products.getRating(),
-                products.getImage(),
-                stockForProduct(products),
-                products.getType().getName(),
-                products.getCustomerCategory().getName(),
-                products.getType().getProductCategory().getName(),
-                products.getPrice()
-        );
+    @Transactional
+    public void updateOrder(Jwt jwt, List<CreateOrderDTO> order) {
+        // Get active order
+        Order activeOrder = helperService.getActiveOrder(UUID.fromString(jwt.getSubject()));
+        // Get orderlines
+        List<OrderLine> oldOrderLines = orderLineRepository.findByOrderId(activeOrder.getId());
+        // Safe remove orderlines
+        for (int i = 0; i < oldOrderLines.size(); i++) {
+            orderLineRepository.delete(oldOrderLines.get(i));
+        }
+        // Save new orderlines
+        for (int i = 0; i < order.size(); i++) {
+            // Get product
+            Product product = helperService.getProduct(order.get(i).getProductId());
+            // Get size
+            Size size = helperService.getSize(order.get(i).getSizeName());
+            // Save orderlines
+            orderLineRepository.save(
+                    new OrderLine(
+                            activeOrder,
+                            product,
+                            size,
+                            order.get(i).getQuantity()
+                    )
+            );
+        }
     }
 
-    public List<StockResponseDTO> stockForProduct(Product product) {
-        List<Stock> stock = stockRepository.findTypeById(product.getId());
-        List<StockResponseDTO> stockResponse = new ArrayList<>();
-        stock.forEach(x ->
-                stockResponse.add(
-                        new StockResponseDTO(
-                                x.getSize().getName(),
-                                x.getQuantity()
-                        )
-                )
-        );
-        return stockResponse;
+    @Transactional
+    public void checkoutOrder(Jwt jwt) {
+        // Get active order
+        Order activeOrder = helperService.getActiveOrder(UUID.fromString(jwt.getSubject()));
+        // Set as paid
+        activeOrder.setPaid(true);
+        // Save
+        orderRepository.save(activeOrder);
     }
 }
