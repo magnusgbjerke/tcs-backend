@@ -20,6 +20,6 @@ public class ValidTypesDTO {
     @Schema(example = "[tops, bottoms, footwear]")
     private List<String> productCategory;
 
-    @Schema(example = "[hoodies, pants, shoes]")
+    @Schema(example = "[hoodie, pants, shoes]")
     private List<String> type;
 }
