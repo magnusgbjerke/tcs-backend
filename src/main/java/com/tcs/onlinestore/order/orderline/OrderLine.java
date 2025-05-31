@@ -30,12 +30,17 @@ public class OrderLine {
     @JoinColumn(nullable = false)
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Size size;
+
     @Column(nullable = false)
     private int quantity;
 
-    public OrderLine(Order orderInst, Product product, int quantity) {
+    public OrderLine(Order orderInst, Product product, Size size, int quantity) {
         this.orderInst = orderInst;
         this.product = product;
+        this.size = size;
         this.quantity = quantity;
     }
 }
