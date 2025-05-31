@@ -25,6 +25,7 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults()) // Allow cors
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/order/**").hasAuthority("USER") // todo Må være påskrudd.
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
