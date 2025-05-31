@@ -7,9 +7,9 @@ values
 'A stylish and sophisticated houndstooth-patterned blazer with a regular fit, perfect for both casual and formal occasions.',
 3.7,
 'hoodie-axe.jpeg',
-'hoodies',
+'hoodie',
 'men',
-799
+79.99
 ),
 (
 'drift-&-dune-oversized-hoodie-i-kangaroo-pocket',
@@ -18,9 +18,9 @@ values
 'An oversized hoodie made from soft fleece, featuring a cozy kangaroo pocket to keep your hands warm during chilly days.',
 4.5,
 'hoodie-black-leg.webp',
-'hoodies',
+'hoodie',
 'men',
-599
+59.99
 ),
 (
 'noxen-cargo-joggers-i-elastic-waist',
@@ -29,9 +29,9 @@ values
 'Sporty joggers with a comfortable elastic waistband and multiple pockets for a functional and stylish look.',
 4.2,
 'hoodie-detroit.jpeg',
-'hoodies',
+'hoodie',
 'men',
-199
+195
 ),
 (
 'urban-loom-graphic-tee-i-vintage-wash',
@@ -42,7 +42,7 @@ values
 't-shirt-2020.jpeg',
 't-shirt',
 'men',
-249
+24.99
 ),
 (
 'luxeroots-basic-hoodie-i-warm-fleece',
@@ -51,7 +51,7 @@ values
 'A cozy basic hoodie made from soft fleece, offering a comfortable fit and warmth for everyday wear.',
 4.1,
 'hoodie-m.jpeg',
-'hoodies',
+'hoodie',
 'men',
-900
+90
 );

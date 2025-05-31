@@ -1,6 +1,6 @@
 insert into type
 values
-('hoodies', 'tops'),
+('hoodie', 'tops'),
 ('t-shirt', 'tops'),
 ('pants', 'bottoms'),
 ('shoes', 'footwear');
