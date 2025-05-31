@@ -12,6 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query(value = "select * from order_entity where user_id=:userId", nativeQuery = true)
-    Optional<Order> findByUserId(UUID userId);
+    @Query(value = "select * from order_entity where user_id=:userId and is_paid=false", nativeQuery = true)
+    Optional<Order> findActiveOrderByUserId(UUID userId);
 }
