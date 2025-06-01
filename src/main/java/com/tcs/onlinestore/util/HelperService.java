@@ -1,7 +1,5 @@
 package com.tcs.onlinestore.util;
 
-import com.tcs.onlinestore.category.customerCategory.CustomerCategoryRepository;
-import com.tcs.onlinestore.category.productCategory.ProductCategoryRepository;
 import com.tcs.onlinestore.exception.ConflictException;
 import com.tcs.onlinestore.exception.EntityNotFoundException;
 import com.tcs.onlinestore.order.Order;
@@ -9,16 +7,12 @@ import com.tcs.onlinestore.order.OrderRepository;
 import com.tcs.onlinestore.product.Product;
 import com.tcs.onlinestore.product.ProductRepository;
 import com.tcs.onlinestore.product.ProductResponseDTO;
-import com.tcs.onlinestore.product.ValidTypesDTO;
 import com.tcs.onlinestore.product.size.Size;
 import com.tcs.onlinestore.product.size.SizeRepository;
 import com.tcs.onlinestore.product.stock.Stock;
 import com.tcs.onlinestore.product.stock.StockRepository;
 import com.tcs.onlinestore.product.stock.StockResponseDTO;
-import com.tcs.onlinestore.product.type.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,23 +25,15 @@ public class HelperService {
 
     private final ProductRepository productRepository;
     private final StockRepository stockRepository;
-    private final CustomerCategoryRepository customerCategoryRepository;
-    private final ProductCategoryRepository productCategoryRepository;
-    private final TypeRepository typeRepository;
     private final OrderRepository orderRepository;
     private final SizeRepository sizeRepository;
 
     @Autowired
     public HelperService(ProductRepository productRepository, StockRepository stockRepository,
-                         CustomerCategoryRepository customerCategoryRepository,
-                         ProductCategoryRepository productCategoryRepository, TypeRepository typeRepository,
                          OrderRepository orderRepository,
                          SizeRepository sizeRepository) {
         this.productRepository = productRepository;
         this.stockRepository = stockRepository;
-        this.customerCategoryRepository = customerCategoryRepository;
-        this.productCategoryRepository = productCategoryRepository;
-        this.typeRepository = typeRepository;
         this.orderRepository = orderRepository;
         this.sizeRepository = sizeRepository;
     }
@@ -87,7 +73,7 @@ public class HelperService {
         return stockResponse;
     }
 
-    public ProductResponseDTO convertToDTO(Product products) {
+    public ProductResponseDTO convertToProductResponseDTO(Product products) {
         return new ProductResponseDTO(
                 products.getId(),
                 products.getName(),

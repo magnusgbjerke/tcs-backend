@@ -1,14 +1,7 @@
 package com.tcs.onlinestore.product;
 
-import com.tcs.onlinestore.exception.EntityNotFoundException;
-import com.tcs.onlinestore.category.customerCategory.CustomerCategory;
 import com.tcs.onlinestore.category.customerCategory.CustomerCategoryRepository;
-import com.tcs.onlinestore.category.productCategory.ProductCategory;
 import com.tcs.onlinestore.category.productCategory.ProductCategoryRepository;
-import com.tcs.onlinestore.product.stock.Stock;
-import com.tcs.onlinestore.product.stock.StockRepository;
-import com.tcs.onlinestore.product.stock.StockResponseDTO;
-import com.tcs.onlinestore.product.type.Type;
 import com.tcs.onlinestore.product.type.TypeRepository;
 import com.tcs.onlinestore.util.HelperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +17,17 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final StockRepository stockRepository;
     private final CustomerCategoryRepository customerCategoryRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final TypeRepository typeRepository;
     private final HelperService helperService;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, StockRepository stockRepository,
+    public ProductService(ProductRepository productRepository,
                           CustomerCategoryRepository customerCategoryRepository,
                           ProductCategoryRepository productCategoryRepository, TypeRepository typeRepository,
                           HelperService helperService) {
         this.productRepository = productRepository;
-        this.stockRepository = stockRepository;
         this.customerCategoryRepository = customerCategoryRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.typeRepository = typeRepository;
@@ -50,7 +41,7 @@ public class ProductService {
         // Find stock for each product
         for (int i = 0; i < products.size(); i++) {
             productResponse.add(
-                    helperService.convertToDTO(products.get(i))
+                    helperService.convertToProductResponseDTO(products.get(i))
             );
         }
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
@@ -58,7 +49,7 @@ public class ProductService {
 
     public ResponseEntity<ProductResponseDTO> getProduct(String id) {
         Product product = helperService.getProduct(id);
-        return new ResponseEntity<>(helperService.convertToDTO(product), HttpStatus.OK);
+        return new ResponseEntity<>(helperService.convertToProductResponseDTO(product), HttpStatus.OK);
     }
 
     public ResponseEntity<List<ProductResponseDTO>> getFilteredProducts(String search, String customerCategory, String productCategory, String type) {
@@ -66,7 +57,7 @@ public class ProductService {
         List<ProductResponseDTO> productResponse = new ArrayList<>();
         for (int i = 0; i < products.size(); i++) {
             productResponse.add(
-                    helperService.convertToDTO(products.get(i))
+                    helperService.convertToProductResponseDTO(products.get(i))
             );
         }
         return new ResponseEntity<>(productResponse, HttpStatus.OK);

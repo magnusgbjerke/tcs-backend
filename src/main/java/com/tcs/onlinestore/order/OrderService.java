@@ -1,60 +1,34 @@
 package com.tcs.onlinestore.order;
 
-import com.tcs.onlinestore.category.customerCategory.CustomerCategory;
-import com.tcs.onlinestore.category.customerCategory.CustomerCategoryRepository;
-import com.tcs.onlinestore.category.productCategory.ProductCategory;
-import com.tcs.onlinestore.category.productCategory.ProductCategoryRepository;
-import com.tcs.onlinestore.exception.ConflictException;
-import com.tcs.onlinestore.exception.EntityNotFoundException;
 import com.tcs.onlinestore.order.orderline.OrderLine;
 import com.tcs.onlinestore.order.orderline.OrderLineDTO;
 import com.tcs.onlinestore.order.orderline.OrderLineRepository;
 import com.tcs.onlinestore.product.Product;
-import com.tcs.onlinestore.product.ProductRepository;
-import com.tcs.onlinestore.product.ProductResponseDTO;
-import com.tcs.onlinestore.product.ValidTypesDTO;
 import com.tcs.onlinestore.product.size.Size;
-import com.tcs.onlinestore.product.size.SizeRepository;
-import com.tcs.onlinestore.product.stock.Stock;
-import com.tcs.onlinestore.product.stock.StockRepository;
-import com.tcs.onlinestore.product.stock.StockResponseDTO;
-import com.tcs.onlinestore.product.type.Type;
-import com.tcs.onlinestore.product.type.TypeRepository;
 import com.tcs.onlinestore.util.HelperService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 @Service
 public class OrderService {
 
-    private final ProductRepository productRepository;
-    private final StockRepository stockRepository;
-    private final CustomerCategoryRepository customerCategoryRepository;
-    private final SizeRepository sizeRepository;
     private final OrderRepository orderRepository;
     private final OrderLineRepository orderLineRepository;
     private final HelperService helperService;
 
     @Autowired
-    public OrderService(ProductRepository productRepository, StockRepository stockRepository,
-                        CustomerCategoryRepository customerCategoryRepository,
-                        SizeRepository sizeRepository, OrderRepository orderRepository,
+    public OrderService(OrderRepository orderRepository,
                         OrderLineRepository orderLineRepository,
                         HelperService helperService) {
-        this.productRepository = productRepository;
-        this.stockRepository = stockRepository;
-        this.customerCategoryRepository = customerCategoryRepository;
-        this.sizeRepository = sizeRepository;
         this.orderRepository = orderRepository;
         this.orderLineRepository = orderLineRepository;
         this.helperService = helperService;
@@ -62,14 +36,22 @@ public class OrderService {
 
     public OrderDTO getActiveOrder(Jwt jwt) {
         // Find order by userId
-        Order order = orderRepository.findActiveOrderByUserId(UUID.fromString(jwt.getSubject())).orElseThrow(
-                () -> new EntityNotFoundException("User have not created an order"));
-        List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.getId());
+        Optional<Order> order = orderRepository.findActiveOrderByUserId(UUID.fromString(jwt.getSubject()));
+        if (order.isEmpty()) {
+            Order newOrder = createEmptyOrder(jwt);
+            List<OrderLineDTO> emptyList = new ArrayList<>();
+            return new OrderDTO(
+                    newOrder.getOrderCreated(),
+                    newOrder.isPaid(),
+                    emptyList
+            );
+        }
+        List<OrderLine> orderLines = orderLineRepository.findByOrderId(order.get().getId());
         List<OrderLineDTO> orderLinesDTO = new ArrayList<>();
         for (int i = 0; i < orderLines.size(); i++) {
             orderLinesDTO.add(
                     new OrderLineDTO(
-                            helperService.convertToDTO(
+                            helperService.convertToProductResponseDTO(
                                     orderLines.get(i).getProduct()
                             ),
                             orderLines.get(i).getSize().getName(),
@@ -78,8 +60,8 @@ public class OrderService {
             );
         }
         return new OrderDTO(
-                order.getOrderCreated(),
-                order.isPaid(),
+                order.get().getOrderCreated(),
+                order.get().isPaid(),
                 orderLinesDTO
         );
     }
@@ -143,5 +125,12 @@ public class OrderService {
         activeOrder.setPaid(true);
         // Save
         orderRepository.save(activeOrder);
+    }
+
+    public Order createEmptyOrder(Jwt jwt) {
+        // Check if user already has an active order
+        helperService.checkActiveOrder(UUID.fromString(jwt.getSubject()));
+        // Save order
+        return orderRepository.save(new Order(UUID.fromString(jwt.getSubject()), LocalDateTime.now(), false));
     }
 }
