@@ -26,9 +26,6 @@ The Clothing Store is an online clothing store created as a part of a school pro
 - **DB**: PostgreSQL
 
 ## Getting Started
-Run locally or with Docker.
-
-### Run locally
 - Requires JDK 21.
 - Requires a PostgreSQL server running on port 5432 with username: postgres and password: postgrespassword.
 - Requires a database named "tcs" on the PostgreSQL server.
