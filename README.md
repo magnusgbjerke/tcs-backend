@@ -46,25 +46,8 @@ Run locally or with Docker.
 
 - Run OnlinestoreApplication
 
-### Run with Docker
-- You need Docker Desktop.
-1. Clone the repository:
-   
-   ```bash
-   git clone https://github.com/magnusgbjerke/tcs-backend.git
-   ```
-
-2. Run Docker Compose Up
-   
-    ```bash
-    cd tcs-backend
-    docker compose up -d
-   ```
-   
 The app should now be running on localhost:8080.
 
 Swagger UI --> [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
 
 OpenAPI v3 --> [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs).
-
-PgAdmin(Web-version, Only available when run with Docker) --> [localhost:80](http://localhost:80).
