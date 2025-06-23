@@ -25,7 +25,7 @@ The Clothing Store is an online clothing store created as a part of a school pro
 - **API Docs**: Swagger UI and OpenAPI v3
 - **DB**: PostgreSQL
 
-### Authentication (Keycloak)
+## Authentication (Keycloak)
 
 To enable login and secure routes, you must start the Keycloak container.
 
