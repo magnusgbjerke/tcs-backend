@@ -25,23 +25,7 @@ The Clothing Store is an online clothing store created as a part of a school pro
 - **API Docs**: Swagger UI and OpenAPI v3
 - **DB**: PostgreSQL
 
-
-
 ## Getting Started
-
-### Authentication (Keycloak)
-
-To enable login and secure routes, you must start the Keycloak container.
-
-```bash
-
-cd tcs-backend
-
-docker build -t keycloak -f keycloak.Dockerfile .
-
-docker run --name keycloak -d -p 8081:8081 keycloak
-
-```
 
 - Requires JDK 21.
 - Requires a PostgreSQL server running on port 5432 with username: postgres and password: postgrespassword.
